@@ -1,8 +1,8 @@
 package owner.redis.demo.service.impl;
 
+import com.google.common.util.concurrent.RateLimiter;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import owner.redis.demo.constant.RedisConfig;
@@ -24,10 +24,8 @@ public class DistributedLockServiceImpl implements DistributedLockService {
 
     @Autowired
     private RedisUtils redisUtils;
-
     @Autowired
     private RedissonClient redissonClient;
-
     @Autowired
     private RedisDelayQueueUtils redisDelayQueueUtils;
 
@@ -112,6 +110,18 @@ public class DistributedLockServiceImpl implements DistributedLockService {
     @Override
     public boolean delayTask(DistributedLockRequest request) {
         redisDelayQueueUtils.addDelayQueue(request.getOrderNo(), 10, TimeUnit.SECONDS, RedisDelayQueueEnum.TEST_DELAYED_TASK.getCode());
+        return true;
+    }
+
+    //在5秒内只允许3个请求通过
+    @Override
+    public boolean slidingWindowA() {
+        return true;
+    }
+
+    @Override
+    public boolean slidingWindowB() {
+        // 每秒允许的请求数
         return true;
     }
 }

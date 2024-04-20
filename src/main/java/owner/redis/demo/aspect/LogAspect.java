@@ -1,4 +1,4 @@
-package owner.redis.demo.config;
+package owner.redis.demo.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -23,8 +23,8 @@ import java.util.Objects;
  * 日志切面
  */
 @Slf4j
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LogAspect {
 
     //execution([方法的可见性] 返回类型 [方法所在类的全路径名] 方法名(参数类型列表) [方法抛出的异常类型])

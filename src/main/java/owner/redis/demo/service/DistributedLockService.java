@@ -15,4 +15,12 @@ public interface DistributedLockService {
     boolean currentLimiting();
 
     boolean delayTask(DistributedLockRequest request);
+
+    boolean slidingWindowA();
+
+    /**
+     * guava实现限流
+     * @return
+     */
+    boolean slidingWindowB();
 }
