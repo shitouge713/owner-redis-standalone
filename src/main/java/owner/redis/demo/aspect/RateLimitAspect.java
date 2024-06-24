@@ -34,6 +34,7 @@ public class RateLimitAspect {
         MyRateLimit rateLimit = method.getAnnotation(MyRateLimit.class);
         String key = rateLimit.key();
         RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
+        // 每当一个请求进入，请求一个令牌
         if (rateLimiter.tryAcquire()) {
             return joinPoint.proceed();
         } else {

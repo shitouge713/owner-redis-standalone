@@ -108,6 +108,21 @@ public class DistributedLockServiceImpl implements DistributedLockService {
     }
 
     @Override
+    public boolean rankingList() {
+        redissonClient.getScoredSortedSet("product_ranking").add(100, "ProductA");
+        redissonClient.getScoredSortedSet("product_ranking").add(99, "ProductB");
+        redissonClient.getScoredSortedSet("product_ranking").add(98, "ProductC");
+        redissonClient.getScoredSortedSet("product_ranking").add(97, "ProductD");
+        redissonClient.getScoredSortedSet("product_ranking").add(96, "ProductE");
+        redissonClient.getScoredSortedSet("product_ranking").add(95, "ProductF");
+        System.out.println("Top 4 products:");
+        redissonClient.getScoredSortedSet("product_ranking")
+                .entryRange(0, 3)
+                .forEach(entry -> System.out.println(entry.getValue() + ": " + entry.getScore()));
+        return false;
+    }
+
+    @Override
     public boolean delayTask(DistributedLockRequest request) {
         redisDelayQueueUtils.addDelayQueue(request.getOrderNo(), 10, TimeUnit.SECONDS, RedisDelayQueueEnum.TEST_DELAYED_TASK.getCode());
         return true;

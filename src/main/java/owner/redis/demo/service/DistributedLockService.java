@@ -14,6 +14,8 @@ public interface DistributedLockService {
 
     boolean currentLimiting();
 
+    boolean rankingList();
+
     boolean delayTask(DistributedLockRequest request);
 
     boolean slidingWindowA();

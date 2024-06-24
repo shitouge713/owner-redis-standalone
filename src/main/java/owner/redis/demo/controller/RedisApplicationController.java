@@ -67,6 +67,12 @@ public class RedisApplicationController {
         return Result.success(distributedLockService.delayTask(request));
     }
 
+    @ApiOperation(value = "应用场景-排行榜")
+    @GetMapping("/rankingList")
+    public Result<Boolean> rankingList() {
+        return Result.success(distributedLockService.rankingList());
+    }
+
     /**
      * 借助@MyRateLimit实现限流
      * @return
